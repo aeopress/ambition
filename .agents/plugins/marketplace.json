@@ -1,0 +1,20 @@
+{
+  "name": "ambition",
+  "interface": {
+    "displayName": "ambition"
+  },
+  "plugins": [
+    {
+      "name": "ambition",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ambition"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

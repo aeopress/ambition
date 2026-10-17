@@ -1,0 +1,36 @@
+{
+  "name": "ambition",
+  "version": "0.1.0",
+  "description": "Pre-flight skill that raises a task's ambition before it runs. Triages the axis (Altitude: the outcome behind the task; Depth: a top professional's raw material, methods and outside judge; Range: other fields and their instruments), then rewrites the task as one prompt and stops. Based on Felix Rieseberg's 2026 tutorial. Replies follow the user's language.",
+  "author": {
+    "name": "yelban"
+  },
+  "homepage": "https://github.com/yelban/ambition.TW",
+  "repository": "https://github.com/yelban/ambition.TW",
+  "license": "MIT",
+  "keywords": [
+    "ambition",
+    "prompt-rewrite",
+    "depth",
+    "methodology",
+    "traditional-chinese"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ambition",
+    "shortDescription": "Make a task deeper, not bigger: Altitude, Depth or Range",
+    "longDescription": "Before a task runs, pick the axis it needs: Altitude (the outcome behind the task, with the prerequisites the model needs), Depth (what a top professional would do, the rawest material, named methods and tools, and an outside judge), or Range (replace the nouns with verbs, then borrow instruments from other fields). The skill rewrites the task as one prompt that ends with an outside check, then stops so you can review it.",
+    "developerName": "yelban",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/yelban/ambition.TW",
+    "defaultPrompt": [
+      "$ambition make the quarterly business review slides from this data",
+      "$ambition find out why our checkout page got slower last week",
+      "$ambition we believe churn is an onboarding problem, write the analysis"
+    ],
+    "brandColor": "#0EA5E9"
+  }
+}
