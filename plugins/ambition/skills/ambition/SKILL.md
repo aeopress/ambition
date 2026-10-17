@@ -1,6 +1,6 @@
 ---
 name: ambition
-description: "Raise the ambition of a task before it runs. Three axes: Altitude (the outcome behind the task), Depth (a top professional's raw material, methods and an outside judge), Range (other fields and their instruments). Produces one rewritten prompt and stops. Keeps the goal and scope: deeper, not bigger. Triggers: be ambitious, more ambitious, deeper not bigger, raise the bar, what would a top professional do, goal behind the goal, which fields could help, 更有野心, 做深一點, 拉高層次, 跨領域借方法. Not for closed factual questions, scope expansion, tone or length edits, or open-ended judgment calls (those go to best-minds)."
+description: "Raise the ambition of a task before it runs. Three axes: Altitude (the outcome behind the task), Depth (a top professional's raw material, methods and an outside judge), Range (other fields and their instruments). Produces one rewritten prompt and stops. Keeps the outcome: deeper, not bigger. Triggers: be ambitious, more ambitious, deeper not bigger, raise the bar, what would a top professional do, goal behind the goal, which fields could help, 更有野心, 做深一點, 拉高層次, 跨領域借方法. Not for closed factual questions, scope expansion, tone or length edits, or open-ended judgment calls (those go to best-minds)."
 ---
 
 <!--
@@ -82,7 +82,7 @@ Two pressure moves, applied in the rewrite:
 
 ### Range
 
-1. **Replace the nouns with verbs.** Rewrite the task as what it does, for whom, under what constraint. "A QBR deck" becomes "get busy people to believe a story about cause and effect, and decide under uncertainty, in 30 minutes."
+1. **Replace the nouns with verbs.** Rewrite the task as what it does, for whom, under what constraint. "A QBR deck" becomes "help busy leaders see what caused this quarter's numbers and decide where to move money and people, within 30 minutes."
 2. **Assemble the crew by instrument.** From the verbs, list two to four fields. For each field give: the field, the instrument it owns (a method, tool or technique), and the verb that instrument serves. Seat one adversarial field whose instrument tries to break the result (a short seller's position research, a forensic accountant's reconciliation).
 3. **Ask for what the field does.** The rewrite asks the model to run that field's instrument on the user's material. A field is a source of methods. The voice stays the user's own.
 
