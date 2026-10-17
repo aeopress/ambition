@@ -96,7 +96,7 @@ Write the rewritten prompt in one fenced block the user can copy. It keeps the u
 - Depth: start from the raw material, use the named methods, end with the outside judge and its pass criterion.
 - Range: run each field's instrument on the material, end with the adversarial field's check.
 
-Every rewrite ends with an outside check. The outside check replaces self-assessment by the model.
+Every rewrite ends with an outside check. The outside check is the last section of the rewritten prompt. Put format and style requirements before it. The outside check replaces self-assessment by the model.
 
 Then stop. Offer in one line to run it now. Start the task only when the user says so.
 
