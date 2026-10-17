@@ -33,9 +33,15 @@
 
 0.1.0。三處 version 要相等。
 
+## 實測（2026-10-17）
+
+- 案例 2 跑了四次：第一次條件 8 未過（外部檢查不在改寫 prompt 最後），第二次條件 3 未過（從業者動作列了五個）。兩處各加一句後，第三、四次全過。
+- 案例 1 與案例 3 各跑一次，全過。
+- runner 坑：judge 那支 `claude -p`（2.1.300）在輸出完整 JSON 後仍以非零碼結束，stderr 印「No messages returned from query」，連續三次。`run.sh` 已改成不讓 pipefail 中止，以 judge 檔能否解析為準。best-minds.TW 的 `run.sh` 有同樣的寫法，待同步。
+
 ## 未解決
 
 - best-minds 那邊的分界條款與「收斂後呼叫 ambition」尚未寫入，要另開 best-minds.TW 的修訂。
 - 第四個 eval 案例（判斷題應轉交 best-minds 的負向案例）尚未寫。
-- 三個案例尚未實跑。跑法：`./evals/run.sh --case 2` 最便宜。
-- Codex 端尚未實裝驗證（`codex plugin marketplace add .` 後 diff cache 裡的 SKILL.md）。
+- Codex 端尚未實裝驗證（`codex plugin marketplace add .` 後 diff cache 裡的 SKILL.md）。memory 裡的 Codex validator 路徑已不存在。
+- README 與 plugin.json 裡的 `yelban/ambition.TW` 網址是預留，repo 尚未推上 GitHub。

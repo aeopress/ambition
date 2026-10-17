@@ -102,8 +102,13 @@ $expectations
 $(cat "$out_file")"
 
   judge_file="$RESULTS_DIR/case-$id-judge.json"
-  claude -p "$judge_prompt" ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} \
+  # judge 的 claude -p 實測會在完整輸出 JSON 之後仍以非零碼結束，stderr 印
+  # 「No messages returned from query」（2026-10-17，連續三次）。輸出檔是完整的，
+  # 所以不讓 pipefail 中止整支腳本，一律以 judge 檔能否解析為準。
+  set +e
+  claude -p "$judge_prompt" ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} 2>"$RESULTS_DIR/case-$id-judge.stderr" \
     | sed -e '/^```/d' > "$judge_file"
+  set -e
 
   if jq -e '.overall_pass == true' "$judge_file" >/dev/null 2>&1; then
     passed=$((passed + 1))
