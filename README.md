@@ -6,6 +6,11 @@ The idea comes from Felix Rieseberg's post [How to be more ambitious: A tutorial
 
 正體中文版在 [README_zh-TW.md](README_zh-TW.md)。
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/ambition-flow-dark.svg">
+  <img alt="Flowchart: a task passes two decisions, what does it need and which axis, and ends as Speed, a best-minds hand-off, or Altitude, Depth or Range, then one rewritten prompt with an outside check" src="docs/diagrams/ambition-flow.svg" width="1000">
+</picture>
+
 ## What it does
 
 Three steps every time.

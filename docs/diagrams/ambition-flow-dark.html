@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What ambition does with a task</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #2d3142;
+      --color-ink:     #f5f5f5;
+      --color-muted:   #bfc0c0;
+      --color-accent:  #f08a59;
+      --font-sans:     'Geist', sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1200px; width: 100%; min-width: 0; }
+    .diagram-container { width: 100%; overflow-x: auto; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 1000px; display: block; }
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Flowchart · ambition</p>
+    <h1>What ambition does with a task</h1>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 1000 740" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ambition-flow-dark-title ambition-flow-dark-desc">
+        <title id="ambition-flow-dark-title">What ambition does with a task</title>
+        <desc id="ambition-flow-dark-desc">Flowchart of how the ambition skill routes a task: Speed runs it as asked, a judgment call goes to best-minds, and a higher bar picks Altitude, Depth or Range before one rewritten prompt with an outside check.</desc>
+        <defs>
+          <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.9" fill="rgba(245,245,245,0.10)"/>
+          </pattern>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bfc0c0"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#f08a59"/></marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#2d3142"/>
+        <rect width="100%" height="100%" fill="url(#dots)" opacity="0.55"/>
+
+        <!-- Arrows (drawn first, behind nodes) -->
+        <line x1="500" y1="88" x2="500" y2="120" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="400" y1="172" x2="300" y2="172" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="600" y1="172" x2="700" y2="172" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)" stroke-dasharray="5,4"/>
+        <line x1="500" y1="224" x2="500" y2="272" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M400,324 H188 Q180,324 180,332 V424" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <line x1="500" y1="376" x2="500" y2="424" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M600,324 H812 Q820,324 820,332 V424" fill="none" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M180,504 V540 Q180,548 188,548 H492" fill="none" stroke="#bfc0c0" stroke-width="1.2"/>
+        <path d="M820,504 V540 Q820,548 812,548 H508" fill="none" stroke="#bfc0c0" stroke-width="1.2"/>
+        <line x1="500" y1="504" x2="500" y2="544" stroke="#bfc0c0" stroke-width="1.2"/>
+        <line x1="500" y1="552" x2="500" y2="588" stroke="#f08a59" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- Arrow labels -->
+        <rect x="318" y="152" width="64" height="12" rx="2" fill="#2d3142"/>
+        <text x="350" y="161" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">JUST DONE</text>
+        <rect x="614" y="152" width="72" height="12" rx="2" fill="#2d3142"/>
+        <text x="650" y="161" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">A DECISION</text>
+        <rect x="508" y="240" width="84" height="12" rx="2" fill="#2d3142"/>
+        <text x="550" y="249" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">A HIGHER BAR</text>
+        <rect x="260" y="304" width="60" height="12" rx="2" fill="#2d3142"/>
+        <text x="290" y="313" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">ALTITUDE</text>
+        <rect x="508" y="392" width="44" height="12" rx="2" fill="#2d3142"/>
+        <text x="530" y="401" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">DEPTH</text>
+        <rect x="688" y="304" width="44" height="12" rx="2" fill="#2d3142"/>
+        <text x="710" y="313" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">RANGE</text>
+
+        <!-- Start -->
+        <rect x="360" y="40" width="280" height="48" rx="20" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.30)" stroke-width="1"/>
+        <text x="500" y="68" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">A task you're about to hand the AI</text>
+
+        <!-- Decision 1 -->
+        <polygon points="500,120 600,172 500,224 400,172" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+        <text x="500" y="168" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">What does</text>
+        <text x="500" y="184" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">it need?</text>
+
+        <!-- Speed end -->
+        <rect x="60" y="148" width="240" height="48" rx="20" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.30)" stroke-width="1"/>
+        <text x="180" y="166" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Speed</text>
+        <text x="180" y="182" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">run it as asked</text>
+
+        <!-- best-minds hand-off -->
+        <rect x="700" y="148" width="240" height="48" rx="20" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.30)" stroke-width="1"/>
+        <text x="820" y="166" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">best-minds round table</text>
+        <text x="820" y="182" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">no single right answer</text>
+
+        <!-- Decision 2 -->
+        <polygon points="500,272 600,324 500,376 400,324" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+        <text x="500" y="328" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Which axis?</text>
+
+        <!-- Axis steps -->
+        <rect x="60" y="424" width="240" height="80" rx="6" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+        <text x="180" y="448" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Altitude</text>
+        <text x="180" y="466" fill="#bfc0c0" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">The outcome behind the task.</text>
+        <text x="180" y="482" fill="#bfc0c0" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">Ladder up, list what it needs first.</text>
+
+        <rect x="380" y="424" width="240" height="80" rx="6" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+        <text x="500" y="448" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Depth</text>
+        <text x="500" y="466" fill="#bfc0c0" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">What a top professional does:</text>
+        <text x="500" y="482" fill="#bfc0c0" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">raw material, named tools, outside judge</text>
+
+        <rect x="700" y="424" width="240" height="80" rx="6" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+        <text x="820" y="448" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Range</text>
+        <text x="820" y="466" fill="#bfc0c0" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">Nouns to verbs, then borrow</text>
+        <text x="820" y="482" fill="#bfc0c0" font-size="10" font-family="'Geist', sans-serif" text-anchor="middle">instruments from other fields.</text>
+
+        <!-- Merge point -->
+        <circle cx="500" cy="548" r="4" fill="#f5f5f5"/>
+
+        <!-- End (focal) -->
+        <rect x="340" y="588" width="320" height="64" rx="20" fill="rgba(240,138,89,0.08)" stroke="#f08a59" stroke-width="1"/>
+        <text x="500" y="610" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">One rewritten prompt,</text>
+        <text x="500" y="626" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">ending with an outside check</text>
+        <text x="500" y="644" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">then it stops, you decide whether to run it</text>
+
+        <!-- Legend -->
+        <line x1="40" y1="676" x2="960" y2="676" stroke="rgba(245,245,245,0.10)" stroke-width="0.8"/>
+        <text x="40" y="692" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND · SHAPE CARRIES TYPE</text>
+
+        <rect x="40" y="708" width="24" height="12" rx="6" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.30)" stroke-width="1"/>
+        <text x="72" y="718" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Start / end (oval)</text>
+        <rect x="200" y="708" width="24" height="12" rx="2" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+        <text x="232" y="718" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Step (rectangle)</text>
+        <polygon points="372,714 384,708 396,714 384,720" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+        <text x="408" y="718" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Decision (diamond)</text>
+        <circle cx="556" cy="714" r="4" fill="#f5f5f5"/>
+        <text x="568" y="718" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Merge</text>
+        <line x1="632" y1="716" x2="660" y2="716" stroke="#f08a59" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <text x="668" y="718" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Happy path</text>
+        <line x1="752" y1="716" x2="780" y2="716" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <text x="788" y="718" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Branch</text>
+        <line x1="856" y1="716" x2="884" y2="716" stroke="#bfc0c0" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+        <text x="892" y="718" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Hand-off</text>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

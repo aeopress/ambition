@@ -6,6 +6,11 @@
 
 English version: [README.md](README.md)
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/ambition-flow-zh-TW-hand-dark.svg">
+  <img alt="流程圖：任務經過兩個決策（需要什麼、走哪一軸），分到 Speed、交給 best-minds，或 Altitude、Depth、Range，最後產出一段以外部檢查收尾的改寫 prompt" src="docs/diagrams/ambition-flow-zh-TW-hand.svg" width="1000">
+</picture>
+
 ## 它做什麼
 
 拿到任務後走三步。
