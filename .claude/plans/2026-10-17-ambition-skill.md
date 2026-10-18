@@ -44,4 +44,4 @@
 - best-minds 那邊的分界條款與「收斂後呼叫 ambition」尚未寫入，要另開 best-minds.TW 的修訂。
 - 第四個 eval 案例（判斷題應轉交 best-minds 的負向案例）尚未寫。
 - Codex 端尚未實裝驗證（`codex plugin marketplace add .` 後 diff cache 裡的 SKILL.md）。memory 裡的 Codex validator 路徑已不存在。
-- README 與 plugin.json 裡的 `yelban/ambition.TW` 網址是預留，repo 尚未推上 GitHub。
+- README 與 plugin.json 裡的 `yelban/ambition` 網址是預留，repo 尚未推上 GitHub。

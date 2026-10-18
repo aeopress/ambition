@@ -6,12 +6,12 @@ Claude Code 與 Codex CLI 雙平台 skill，把一個任務「做深、不做大
 
 交付物固定：點名軸線、依軸分析、一段 fenced prompt、停下。
 
-**語言策略**：`skills/ambition/SKILL.md` 正本以英文撰寫，STE 風格（短句、主動語態、一物一名），開頭明令跟隨使用者語言。繁中說明在 `README_zh-TW.md`。
+**語言策略**：`skills/ambition/SKILL.md` 正本以英文撰寫，STE 風格（短句、主動語態、一物一名），開頭明令跟隨使用者語言。`README.md` 是正體中文主說明，`README_en.md` 是英文版。
 
 ## 專案結構
 
 ```
-ambition.TW/
+ambition/
 ├── .claude-plugin/
 │   ├── marketplace.json          # Claude Code marketplace 清單（source: "./"）
 │   └── plugin.json               # Claude Code plugin 清單
@@ -26,7 +26,8 @@ ambition.TW/
 ├── evals/evals.json              # 行為驗收契約，一軸一案
 ├── evals/run.sh                  # 自動回歸
 ├── .claude/plans/                # 計畫檔，有追蹤
-├── README.md / README_zh-TW.md
+├── README.md                     # 正體中文主說明
+├── README_en.md                  # 英文版
 └── LICENSE                       # MIT
 ```
 
@@ -37,7 +38,7 @@ ambition.TW/
 1. 檔頭 YAML frontmatter 與 HTML 註解。
 2. `.claude-plugin/marketplace.json`、`.claude-plugin/plugin.json`、`plugins/ambition/.codex-plugin/plugin.json` 的 version，三處相等。
 3. 方法論變動移植到 `plugins/ambition/skills/ambition/SKILL.md`。該檔只在平台機制上不同：frontmatter 只留 name 與 description、一般提問取代 AskUserQuestion、「使用 best-minds skill」取代 Skill tool 呼叫。
-4. 方法論變動同步 `README.md` 與 `README_zh-TW.md`。
+4. 方法論變動同步 `README.md`（正體中文）與 `README_en.md`（英文）。
 5. 改護欄後對照 `evals/evals.json`，可跑 `evals/run.sh`；`--case 2` 最便宜。
 
 根目錄 `SKILL.md` 是 symlink，不要直接編輯或以實體檔案覆蓋。
