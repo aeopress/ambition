@@ -18,7 +18,7 @@ Architecture guardian. When this file changes, also update:
 2. the version in .claude-plugin/marketplace.json, .claude-plugin/plugin.json and plugins/ambition/.codex-plugin/plugin.json (keep all three equal)
 3. the Codex variant plugins/ambition/skills/ambition/SKILL.md (platform mechanics differ, the methodology follows this file)
 4. evals/evals.json expectations when a guardrail changes
-5. README.md (Traditional Chinese) and README_en.md when the methodology changes
+5. README.md (English) and README_zh-TW.md (Traditional Chinese) when the methodology changes
 -->
 
 # Ambition

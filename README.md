@@ -1,49 +1,44 @@
 # ambition
 
-讓一個任務做得更深，不是做得更大。你把準備交給 AI 的任務丟給它，它先判斷這個任務需要哪一種野心，照那一軸分析，再把任務改寫成一段可以直接執行的 prompt，然後停下來等你看過。
+A skill for Claude Code and Codex CLI. You hand it a task you were about to give the AI, and it hands back a sharper version of the same task. It figures out which kind of ambition the task needs, works through that angle, rewrites the task as a prompt you can run, and then stops so you can read it first.
 
-方法來自 Felix Rieseberg 2026 年 10 月的文章《How to be more ambitious: A tutorial for humans with models》。他把野心分成四種：Speed、Altitude、Depth、Range。Speed 是同樣的事做得更快，他明說這不需要技巧，所以這個 skill 只處理另外三種。
+The idea comes from Felix Rieseberg's post [How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/) (October 2026). He splits ambition into four kinds: Speed, Altitude, Depth and Range. Speed is doing the same work faster, and he says outright that it needs no technique, so this skill only deals with the other three.
 
-English version: [README_en.md](README_en.md)
+正體中文版在 [README_zh-TW.md](README_zh-TW.md)。
 
-## 它做什麼
+## What it does
 
-拿到任務後走三步。
+Three steps every time.
 
-**第一步，分流。** 判斷任務需要哪一軸。
+First it picks an axis. Altitude means the task is standing in for some outcome. Slides, a weekly report, fixing one crash: there's always a "what happens after this is done" behind it. Depth means you want this one thing done the way the best person in the field would do it. Range means the task looks like it belongs to one field but another field has better tools for it. And if the task is clear and you just want it done, the skill says "this only needs Speed" and runs it as written.
 
-- Altitude：任務其實是某個結果的代理。簡報、週報、修某一個 crash，背後都有一個「做完之後要發生什麼」。
-- Depth：你就是要把這一件事做到該領域頂尖從業者的水準。
-- Range：任務表面上屬於一個領域，但別的領域有更好的工具。
-- Speed：任務清楚，你只想快點做完。skill 會說一句「這只需要 Speed」，然後照原樣執行。
+Then it works the axis.
 
-**第二步，依軸分析。**
+- On Altitude it keeps asking "and then what?" until it lands on an outcome someone will decide on. It writes a three-rung ladder (the task as asked, the decision the task serves, the outcome itself) and lists what the model needs before the top rung is even possible: data access, tools, an environment, some way to verify the result.
+- On Depth it answers four questions. What would a top professional do here that you didn't ask for? What's the rawest material they'd start from? Which methods and tools, by name? And who or what, other than you or the model, gets to say the result is right? Any belief you stated ("churn is an onboarding problem") turns into a hypothesis to test against the raw data.
+- On Range it swaps the nouns for verbs first. "A quarterly deck" becomes "help busy leaders see what caused this quarter's numbers and decide where the money goes, in 30 minutes." From those verbs it picks two to four fields, each with the instrument that field would really use, and one of them is there to try to break the result.
 
-- Altitude 追問「做完之後接下來呢」，直到問出一個有人要做決定的結果。寫出三階梯：原任務、任務服務的決策、結果本身。再列出模型要先拿到哪些資料、工具或環境，頂階才做得到。
-- Depth 回答四題：頂尖從業者會多做什麼、他們會從哪份最原始的材料開始、會用哪些具名的方法與工具、除了你和模型之外誰能判定結果是對的。你說出口的信念，例如「流失是 onboarding 的問題」，會被改成要用原始資料驗證的假設。
-- Range 先把任務的名詞換成動詞。「一份季報」變成「讓忙碌的主管在 30 分鐘內看懂因果，並決定錢往哪裡投」。再從動詞找出二到四個領域，每個領域附上它實際使用的工具，其中一個負責推翻結果。
+Last, it writes the prompt. One code block, in your voice and your language, ending with an outside check and what counts as a pass. Then it asks whether you want to run it. It doesn't start on its own.
 
-**第三步，改寫，然後停。** 一段放在 code block 裡的 prompt，用你的口吻、你的語言，結尾一定是外部檢查與通過標準。skill 問你一句要不要跑，不會自己開始。
+The reply follows whatever language your task was in. The analysis part is written in short sentences, active voice, one name per thing. (That bit comes from a Karpathy tweet about asking models for ASD-STE100 style output. I kept about 80% of it.)
 
-回覆語言跟著你的任務走。分析段用短句、主動語態，一個東西只有一個名字。
+## When to reach for it
 
-## 適合的情境
+- You're about to give the AI a task and you can't quite say what the result is for. "Turn this quarter's data into slides" is the classic case. Altitude pulls it up to "what does leadership need to decide with this?"
+- You want an analysis, a report, a performance investigation, done properly. Depth makes the model use the field's real tools instead of a markdown table, and insists on a check the model can't grade itself.
+- You suspect some other field has done this better and you don't know which one. Range finds the field from the verbs and gives each one a concrete tool.
+- best-minds already helped you settle on a direction and now you need to do the thing. Hand the direction to ambition and it becomes a runnable prompt.
 
-- 你要交給 AI 的任務，自己也說不清做完要用來做什麼，例如「把這季資料做成簡報」。Altitude 會把它拉到「主管要在這份東西上做什麼決定」。
-- 你要一份分析、一份報告或一次效能調查，而且想做到專業水準。Depth 會要求模型用該領域真正的工具，不是 markdown 表格，而且要有一個不是模型自己說了算的驗證。
-- 你覺得這件事應該有別的領域做過更好，但不知道是哪個。Range 會從動詞找領域，再給每個領域一個具體工具。
-- 圓桌（best-minds）已經幫你收斂出方向，接下來要動手。把方向丟給 ambition，它會改成可執行的 prompt。
+When not to bother:
 
-不適合這些情況：
+- Closed factual questions. Just ask.
+- Judgment calls with no right answer, like "should we go all in on TDD". That's best-minds territory, and ambition will send you there.
+- Making the task bigger. More features, more deliverables. The whole point is the same outcome at a higher bar, so suggestions that add scope get cut.
+- Tone or length edits.
 
-- 封閉的事實問題。直接問就好。
-- 沒有標準答案的判斷題，例如「該不該全面導入 TDD」。那是 best-minds 的事，ambition 會直接轉過去。
-- 想把範圍做大、多加功能。ambition 的原則是同一個結果、更高的標準，會把加交付物的建議刪掉。
-- 只是改語氣、改長度。
+## Install
 
-## 安裝
-
-需要 Claude Code 或 Codex CLI 其中一個。
+You need either Claude Code or Codex CLI.
 
 ### Claude Code
 
@@ -52,7 +47,7 @@ claude plugin marketplace add yelban/ambition
 claude plugin install ambition@ambition
 ```
 
-在對話裡打 `/plugin` 也能做同樣的事。
+Typing `/plugin` inside a session does the same thing.
 
 ### Codex CLI
 
@@ -61,16 +56,16 @@ codex plugin marketplace add yelban/ambition
 codex plugin add ambition@ambition
 ```
 
-### 手動，不走 plugin
+### By hand, no plugin
 
 ```bash
 git clone https://github.com/yelban/ambition.git ~/zoo/skills/ambition
 ln -s ~/zoo/skills/ambition/skills/ambition ~/.claude/skills/ambition
 ```
 
-裝好後，在對話裡打 `/ambition` 加上你的任務，或直接說「更有野心一點」「做深一點」，skill 會自己接手。
+Once it's in, type `/ambition` followed by your task, or just say something like "be more ambitious with this" and the skill picks it up on its own.
 
-## 更新
+## Update
 
 ### Claude Code
 
@@ -79,7 +74,7 @@ claude plugin marketplace update ambition
 claude plugin update ambition@ambition
 ```
 
-更新後要重開 Claude Code 才生效。
+Restart Claude Code afterwards, or the old version keeps running.
 
 ### Codex CLI
 
@@ -89,26 +84,26 @@ codex plugin remove ambition@ambition
 codex plugin add ambition@ambition
 ```
 
-依 `--help` 的說明，`upgrade` 只更新 marketplace 的快照，所以 plugin 本體重裝一次最保險。
+As far as `--help` says, `upgrade` only refreshes the marketplace snapshot, so reinstalling the plugin is the safe way to be sure you have the new one.
 
-### 手動安裝
+### By hand
 
-到 clone 下來的目錄執行 `git pull`，symlink 會指到新版。
+`git pull` in the cloned directory. The symlink already points at it.
 
-## 與 best-minds 的關係
+## How it relates to best-minds
 
-[best-minds](https://github.com/yelban/best-minds.TW) 替沒有標準答案的問題召集真實人物的觀點，收斂出一個方向。ambition 把要執行的任務拉到專業水準。兩個接起來用，圓桌先決定往哪走，ambition 再把那一步改成帶外部檢查的 prompt。分界在於 ambition 的 Range 給任務找領域和工具，best-minds 給決策找人和立場。
+[best-minds](https://github.com/yelban/best-minds.TW) is for questions with no right answer. It convenes real people's stances and converges on a direction. ambition is for a task that's going to run, and it raises the bar on that task. They chain: the round table decides where to go, then ambition turns that step into a prompt with an outside check. The line between them is that Range finds fields and tools for a task, while best-minds finds people and positions for a decision.
 
-## 開發與驗收
+## Hacking on it
 
-正本是 `skills/ambition/SKILL.md`，英文撰寫。`plugins/ambition/` 底下是 Codex 版，只在平台機制上不同。`evals/evals.json` 有三個案例，一軸一案，`./evals/run.sh --case 2` 跑單一案例，不帶參數跑全部。改了 SKILL.md 要同步的地方寫在 `CLAUDE.md`。
+The canonical file is `skills/ambition/SKILL.md`, written in English. `plugins/ambition/` holds the Codex edition, which differs only in platform mechanics. If you change SKILL.md, bump the version in all three plugin manifests and port the change to the Codex edition. `evals/evals.json` has three cases, one per axis. `./evals/run.sh --case 2` runs one, no argument runs all.
 
-## 來源
+## Where it comes from
 
-- Felix Rieseberg，[How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/)，2026-10-13。Depth 的四題逐字引用他的 prompt，其餘技巧是轉述。
-- [DannyMac180/skills 的 be-ambitious](https://github.com/DannyMac180/skills/tree/main/be-ambitious)（MIT）只實作了 Depth。本 skill 的輸入規則與「改寫後停下」參考它。
-- Andrej Karpathy 2026-10-02 的推文建議要求模型用 ASD-STE100 輸出，比較好讀。分析段的短句規則取其八成。
+- Felix Rieseberg, [How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/), 2026-10-13. The four Depth questions quote his prompt word for word. Everything else is paraphrased.
+- [be-ambitious](https://github.com/DannyMac180/skills/tree/main/be-ambitious) from DannyMac180/skills (MIT) implements the Depth prompt only. The input rules and the "rewrite, then stop" ending are borrowed from it.
+- Andrej Karpathy's tweet from 2026-10-02 on asking models to write in ASD-STE100.
 
-## 授權
+## License
 
-MIT，見 [LICENSE](LICENSE)。
+MIT. See [LICENSE](LICENSE).

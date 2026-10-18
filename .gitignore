@@ -9,19 +9,24 @@ Thumbs.db
 .vscode/
 .idea/
 *.code-workspace
+
 # Node (if needed)
 node_modules/
 package-lock.json
 yarn.lock
+
 # Environment
 .env
 .env.local
+
 # Temporary files
 *.tmp
 *.temp
 .cache/
+
 # Local working artifacts (not part of the skill)
-.claude/*
-!.claude/plans/
+.claude/
+CLAUDE.md
+docs.local/
 .mcp.json
 evals/results/
