@@ -53,7 +53,7 @@ English version: [README.md](README.md)
 ### Claude Code
 
 ```bash
-claude plugin marketplace add yelban/ambition
+claude plugin marketplace add aeopress/ambition
 claude plugin install ambition@ambition
 ```
 
@@ -62,14 +62,14 @@ claude plugin install ambition@ambition
 ### Codex CLI
 
 ```bash
-codex plugin marketplace add yelban/ambition
+codex plugin marketplace add aeopress/ambition
 codex plugin add ambition@ambition
 ```
 
 ### 手動，不走 plugin
 
 ```bash
-git clone https://github.com/yelban/ambition.git ~/zoo/skills/ambition
+git clone https://github.com/aeopress/ambition.git ~/zoo/skills/ambition
 ln -s ~/zoo/skills/ambition/skills/ambition ~/.claude/skills/ambition
 ```
 

@@ -5,8 +5,8 @@
   "author": {
     "name": "yelban"
   },
-  "homepage": "https://github.com/yelban/ambition",
-  "repository": "https://github.com/yelban/ambition",
+  "homepage": "https://github.com/aeopress/ambition",
+  "repository": "https://github.com/aeopress/ambition",
   "license": "MIT",
   "keywords": [
     "ambition",
@@ -25,7 +25,7 @@
     "capabilities": [
       "Interactive"
     ],
-    "websiteURL": "https://github.com/yelban/ambition",
+    "websiteURL": "https://github.com/aeopress/ambition",
     "defaultPrompt": [
       "$ambition make the quarterly business review slides from this data",
       "$ambition find out why our checkout page got slower last week",
