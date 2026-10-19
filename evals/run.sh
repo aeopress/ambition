@@ -5,6 +5,7 @@
 #   ./evals/run.sh                              # 跑全部案例，每案例預設跑 2 次
 #   ./evals/run.sh --case 2                     # 只跑指定 id
 #   ./evals/run.sh --runs 3                     # 每案例跑 3 次
+#   ./evals/run.sh --rejudge <output.md> --case 3   # 只重跑 judge：用案例目前的 expectations 判定存檔輸出
 #   EVAL_MODEL=claude-sonnet-5 ./evals/run.sh   # 指定模型（受測與 judge 同款；預設用 CLI 預設模型）
 #   SKILL_FILE=/tmp/skill-v0.1.0.md ./evals/run.sh   # A/B：指定其他版本的 SKILL.md
 #     （舊版取法：git show <commit>:skills/ambition/SKILL.md > /tmp/skill-v0.1.0.md）
@@ -30,11 +31,13 @@ RESULTS_DIR="evals/results/$(date +%Y%m%d-%H%M%S)"
 RUNS=2
 
 CASE_FILTER=""
+REJUDGE_FILE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --case) CASE_FILTER="$2"; shift 2 ;;
     --runs) RUNS="$2"; shift 2 ;;
-    *) echo "未知參數：$1（支援 --case <id>、--runs <n>）" >&2; exit 2 ;;
+    --rejudge) REJUDGE_FILE="$2"; shift 2 ;;
+    *) echo "未知參數：$1（支援 --case <id>、--runs <n>、--rejudge <output.md>）" >&2; exit 2 ;;
   esac
 done
 
@@ -48,6 +51,63 @@ SKILL_BODY="$(cat "$SKILL_FILE")"
 MODEL_ARGS=()
 [[ -n "${EVAL_MODEL:-}" ]] && MODEL_ARGS=(--model "$EVAL_MODEL")
 
+# judge：用案例的 prompt 與 expectations 判定一份輸出檔，結果寫進 judge 檔。
+# 參數：<prompt> <expectations> <輸出檔> <judge 檔> <stderr 檔>
+judge() {
+  local prompt="$1" expectations="$2" out_file="$3" judge_file="$4" stderr_file="$5"
+  local judge_prompt="你是行為驗收的 judge。以下是一個 skill 對測試 prompt 的實際輸出，以及逐項驗收條件。
+請逐項判定 pass/fail，嚴格依字面條件核對，不要腦補輸出中不存在的內容。
+只輸出 JSON（不要 code fence、不要任何其他文字），格式：
+{\"results\":[{\"n\":1,\"pass\":true,\"reason\":\"一句話\"}],\"overall_pass\":true}
+overall_pass 為所有項目皆 pass 才是 true。
+
+## 測試 prompt
+$prompt
+
+## 驗收條件
+$expectations
+
+## 實際輸出（主對話完整逐字稿）
+$(cat "$out_file")"
+
+  # judge 的 claude -p 實測會在完整輸出 JSON 之後仍以非零碼結束，stderr 印
+  # 「No messages returned from query」（2026-10-17，連續三次）。輸出檔是完整的，
+  # 所以不讓 pipefail 中止整支腳本，一律以 judge 檔能否解析為準。
+  set +e
+  claude -p "$judge_prompt" ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} 2>"$stderr_file" \
+    | sed -e '/^```/d' > "$judge_file"
+  set -e
+}
+
+# 列出未過項目；judge 檔無法解析時印原文。
+print_failures() {
+  jq -r '.results[] | select(.pass == false) | "   - 條件 \(.n)：\(.reason)"' "$1" 2>/dev/null \
+    || { echo "   （judge 輸出無法解析，原文如下）"; cat "$1"; }
+}
+
+case_field() {
+  jq -r ".evals[] | select(.id==$1) | $2" "$EVALS_FILE"
+}
+
+case_expectations() {
+  jq -r ".evals[] | select(.id==$1) | .expectations | to_entries | map(\"\\(.key + 1). \\(.value)\") | join(\"\\n\")" "$EVALS_FILE"
+}
+
+# 重判模式：不跑受測，只用目前的 expectations 判定存檔輸出。
+if [[ -n "$REJUDGE_FILE" ]]; then
+  [[ -n "$CASE_FILTER" ]] || { echo "--rejudge 需要搭配 --case <id>" >&2; exit 2; }
+  [[ -f "$REJUDGE_FILE" ]] || { echo "找不到輸出檔：$REJUDGE_FILE" >&2; exit 2; }
+  judge "$(case_field "$CASE_FILTER" .prompt)" "$(case_expectations "$CASE_FILTER")" "$REJUDGE_FILE" \
+    "$RESULTS_DIR/rejudge-case-$CASE_FILTER-judge.json" "$RESULTS_DIR/rejudge-case-$CASE_FILTER-judge.stderr"
+  if jq -e '.overall_pass == true' "$RESULTS_DIR/rejudge-case-$CASE_FILTER-judge.json" >/dev/null 2>&1; then
+    echo "== rejudge case ${CASE_FILTER}：PASS（判定：$RESULTS_DIR/rejudge-case-$CASE_FILTER-judge.json）"
+    exit 0
+  fi
+  echo "== rejudge case ${CASE_FILTER}：FAIL（判定：$RESULTS_DIR/rejudge-case-$CASE_FILTER-judge.json）"
+  print_failures "$RESULTS_DIR/rejudge-case-$CASE_FILTER-judge.json" | sed -e 's/^   //'
+  exit 1
+fi
+
 total=0
 passed=0
 failed=0
@@ -57,10 +117,10 @@ for id in $(jq -r '.evals[].id' "$EVALS_FILE"); do
     continue
   fi
   total=$((total + 1))
-  title=$(jq -r ".evals[] | select(.id==$id) | .title" "$EVALS_FILE")
-  prompt=$(jq -r ".evals[] | select(.id==$id) | .prompt" "$EVALS_FILE")
-  gate=$(jq -r ".evals[] | select(.id==$id) | .gate // \"any\"" "$EVALS_FILE")
-  expectations=$(jq -r ".evals[] | select(.id==$id) | .expectations | to_entries | map(\"\(.key + 1). \(.value)\") | join(\"\n\")" "$EVALS_FILE")
+  title=$(case_field "$id" .title)
+  prompt=$(case_field "$id" .prompt)
+  gate=$(case_field "$id" '.gate // "any"')
+  expectations=$(case_expectations "$id")
 
   echo "== case ${id}：${title}"
   run_passes=0
@@ -98,36 +158,14 @@ for id in $(jq -r '.evals[].id' "$EVALS_FILE"); do
     jq -r 'select(.type == "assistant") | .message.content[]? | select(.type == "text") | .text' \
       "$raw_file" > "$out_file"
 
-    judge_prompt="你是行為驗收的 judge。以下是一個 skill 對測試 prompt 的實際輸出，以及逐項驗收條件。
-請逐項判定 pass/fail，嚴格依字面條件核對，不要腦補輸出中不存在的內容。
-只輸出 JSON（不要 code fence、不要任何其他文字），格式：
-{\"results\":[{\"n\":1,\"pass\":true,\"reason\":\"一句話\"}],\"overall_pass\":true}
-overall_pass 為所有項目皆 pass 才是 true。
-
-## 測試 prompt
-$prompt
-
-## 驗收條件
-$expectations
-
-## 實際輸出（主對話完整逐字稿）
-$(cat "$out_file")"
-
-    # judge 的 claude -p 實測會在完整輸出 JSON 之後仍以非零碼結束，stderr 印
-    # 「No messages returned from query」（2026-10-17，連續三次）。輸出檔是完整的，
-    # 所以不讓 pipefail 中止整支腳本，一律以 judge 檔能否解析為準。
-    set +e
-    claude -p "$judge_prompt" ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} 2>"$RESULTS_DIR/case-$id-r$r-judge.stderr" \
-      | sed -e '/^```/d' > "$judge_file"
-    set -e
+    judge "$prompt" "$expectations" "$out_file" "$judge_file" "$RESULTS_DIR/case-$id-r$r-judge.stderr"
 
     if jq -e '.overall_pass == true' "$judge_file" >/dev/null 2>&1; then
       run_passes=$((run_passes + 1))
       echo "   run ${r}：PASS（輸出：${out_file}）"
     else
       echo "   run ${r}：FAIL — 未過項目："
-      jq -r '.results[] | select(.pass == false) | "   - 條件 \(.n)：\(.reason)"' "$judge_file" 2>/dev/null \
-        || { echo "   （judge 輸出無法解析，原文如下）"; cat "$judge_file"; }
+      print_failures "$judge_file"
       echo "   （輸出：${out_file}；判定：${judge_file}）"
     fi
   done
