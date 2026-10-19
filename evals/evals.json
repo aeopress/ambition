@@ -64,7 +64,8 @@
         "沒有輸出 fenced code block 的改寫 prompt",
         "沒有自己回答該不該廢掉 QBR",
         "叫不到 Skill tool 時仍以文字說明要轉交 best-minds，不改做分析",
-        "回覆用繁體中文"
+        "回覆用繁體中文",
+        "轉交句之後沒有其他內容，包括照抄原問題的 code block"
       ],
       "gate": "all"
     }
