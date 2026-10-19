@@ -101,7 +101,7 @@ As far as `--help` says, `upgrade` only refreshes the marketplace snapshot, so r
 
 ## Hacking on it
 
-The canonical file is `skills/ambition/SKILL.md`, written in English. `plugins/ambition/` holds the Codex edition, which differs only in platform mechanics. If you change SKILL.md, bump the version in all three plugin manifests and port the change to the Codex edition. `evals/evals.json` has three cases, one per axis. `./evals/run.sh --case 2` runs one, no argument runs all.
+The canonical file is `skills/ambition/SKILL.md`, written in English. `plugins/ambition/` holds the Codex edition, which differs only in platform mechanics. If you change SKILL.md, bump the version in all three plugin manifests and port the change to the Codex edition. `evals/evals.json` has four cases: one per axis, plus a negative case that must hand off to best-minds. `./evals/run.sh --case 2` runs one, no argument runs all. The judge is an LLM and not deterministic, so each case runs twice (`--runs N` to change it); a case passes when one run clears every expectation, except the hand-off case, which has to pass every run.
 
 ## Where it comes from
 
