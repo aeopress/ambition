@@ -45,9 +45,11 @@ Pick one axis. Use these tells:
 - **Range**: the task sits on the surface of one field. Other fields own better instruments for parts of it.
 - **Speed**: the task is clear and the user wants it done. Say "this task needs Speed only" and stop. Offer to run it as asked.
 
+Name the axis and its tell in one sentence, then move on.
+
 When the task is an open-ended judgment with no single right answer, the hand-off is the whole reply: say in one or two sentences that this is a judgment call and that best-minds handles it, then use the best-minds skill. When the Skill tool is unavailable, tell the user to run best-minds and stop. A hand-off carries no axis, no analysis, no rewritten prompt and no opinion of your own. The boundary: Range yields fields and instruments for a task that will run. best-minds yields real people's perspectives for a decision.
 
-When two axes fit, pick the axis the user's wording supports. Name the other axis as a follow-up. When the choice hinges on the user's intent, ask the user one question with the two axes. When interaction is unavailable, state the assumption you chose.
+When two axes fit, pick the axis the user's wording supports. Name the other axis in a few words as a follow-up. When the choice hinges on the user's intent, ask the user one question with the two axes. When interaction is unavailable, state the assumption you chose.
 
 Done when: one axis is named, with its tell, before any analysis, or the hand-off sentence is written and nothing follows it.
 
