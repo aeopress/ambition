@@ -60,6 +60,8 @@ for id in $(jq -r '.evals[].id' "$EVALS_FILE"); do
   out_file="$RESULTS_DIR/case-$id-output.md"
   # stream-json 抓完整逐字稿：軸線點名等中間訊息可能不在最終回覆裡，只抓最後一則會漏。
   # 停用 Agent/Task：evals 驗的是輸出契約，不是 subagent 編排。
+  # 停用 Skill：受測只能用文字說明轉交，不能真的叫到本機安裝的 best-minds plugin
+  # （2026-10-19 實測，案例 4 的受測呼叫了 best-minds，開圓桌、查網路、還把辯論寫進 docs.local）。
   # perl alarm 硬逾時 15 分鐘＋自動重試：headless 偶發 API 端卡死（tool_result 已回、
   # 下一個 assistant 訊息永不到）。逾時（exit 142）自動重試最多三次，其他錯誤直接失敗。
   attempt=1
@@ -69,7 +71,7 @@ for id in $(jq -r '.evals[].id' "$EVALS_FILE"); do
     perl -e 'alarm shift @ARGV; exec @ARGV' 900 claude -p "$prompt" \
       --append-system-prompt "$SKILL_BODY" \
       --allowedTools "WebSearch,WebFetch" \
-      --disallowedTools "Agent,Task" \
+      --disallowedTools "Agent,Task,Skill" \
       --output-format stream-json --verbose \
       ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} > "$raw_file"
     subject_rc=$?

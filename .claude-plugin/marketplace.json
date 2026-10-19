@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Ambition skill: raise a task on one of three axes (Altitude, Depth, Range) and rewrite it as a prompt with an outside judge. Deeper, not bigger. English canonical, replies follow the user's language.",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "plugins": [
     {
       "name": "ambition",
       "source": "./",
       "description": "Pre-flight skill that raises a task's ambition before it runs. Triages the axis (Altitude: the outcome behind the task; Depth: a top professional's raw material, methods and outside judge; Range: other fields and their instruments), then rewrites the task as one prompt and stops. Based on Felix Rieseberg's 2026 tutorial. Replies follow the user's language.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": {
         "name": "yelban"
       },
