@@ -44,7 +44,13 @@ done
 command -v claude >/dev/null || { echo "找不到 claude CLI" >&2; exit 1; }
 command -v jq >/dev/null || { echo "找不到 jq" >&2; exit 1; }
 
-mkdir -p "$RESULTS_DIR"
+if [[ -n "$REJUDGE_FILE" ]]; then
+  # 重判常平行跑，秒級時間戳會撞名；mktemp 加隨機尾碼，每次一個獨立目錄。
+  mkdir -p evals/results
+  RESULTS_DIR="$(mktemp -d "${RESULTS_DIR}-rejudge-XXXXXX")"
+else
+  mkdir -p "$RESULTS_DIR"
+fi
 SKILL_BODY="$(cat "$SKILL_FILE")"
 
 # macOS 內建 bash 3.2 在 set -u 下展開空陣列會報錯，用條件展開保護
