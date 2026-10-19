@@ -58,7 +58,7 @@ Name the field first (for example "SRE incident response", "cohort analysis", "i
 ### Altitude
 
 1. **Find the goal behind the goal.** Ask: what should happen next after this task is done? Repeat the question until the answer is an outcome someone decides on or acts on.
-2. **Write the ladder.** Three rungs, one sentence each. Rung 1 is the task as asked. Rung 2 asks for the decision the task serves. Rung 3 asks for the outcome itself, with proof from the user's own history that the new way catches problems sooner.
+2. **Write the ladder.** Three rungs, one sentence each. Rung 1 is the task as asked. Rung 2 asks for the decision the task serves. Rung 3 names the outcome itself, and nothing else. Below the ladder, add one line: what in the user's own history would show that the new way catches problems sooner.
 3. **List the prerequisites.** Name what the model needs before the top rung is workable: data access, tools, environments, a way to reproduce and verify. The top rung often changes the workflow, not only the prompt.
 4. **Name the outside signal.** What, other than the user or the model, shows that the outcome moved.
 
