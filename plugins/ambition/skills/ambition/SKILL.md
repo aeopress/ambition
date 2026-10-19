@@ -85,7 +85,7 @@ Two pressure moves, applied in the rewrite:
 ### Range
 
 1. **Replace the nouns with verbs.** Rewrite the task as what it does, for whom, under what constraint. "A QBR deck" becomes "help busy leaders see what caused this quarter's numbers and decide where to move money and people, within 30 minutes."
-2. **Assemble the crew by instrument.** From the verbs, list two to four fields. For each field give: the field, the instrument it owns (a method, tool or technique), and the verb that instrument serves. Seat one adversarial field whose instrument tries to break the result (a short seller's position research, a forensic accountant's reconciliation).
+2. **Assemble the crew by instrument.** From the verbs, list two to four fields, at most four rows, one instrument each. For each field give: the field, the instrument it owns (a method, tool or technique), and the verb that instrument serves. Seat one adversarial field whose instrument tries to break the result (a short seller's position research, a forensic accountant's reconciliation).
 3. **Ask for what the field does.** The rewrite asks the model to run that field's instrument on the user's material. A field is a source of methods. The voice stays the user's own.
 
 Done when: every field on the list carries a named instrument and the verb it serves.
