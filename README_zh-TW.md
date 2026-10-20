@@ -24,11 +24,11 @@ English version: [README.md](README.md)
 
 **第二步，依軸分析。**
 
-- Altitude 追問「做完之後接下來呢」，直到問出一個有人要做決定的結果。寫出三階梯：原任務、任務服務的決策、結果本身。再列出模型要先拿到哪些資料、工具或環境，頂階才做得到。
-- Depth 回答四題：頂尖從業者會多做什麼、他們會從哪份最原始的材料開始、會用哪些具名的方法與工具、除了你和模型之外誰能判定結果是對的。你說出口的信念，例如「流失是 onboarding 的問題」，會被改成要用原始資料驗證的假設。
+- Altitude 追問「做完之後接下來呢」，直到問出一個有人要做決定的結果。寫出三階梯：原任務、任務服務的決策、結果本身。再列出模型要先拿到哪些資料、工具或環境，頂階才做得到。同一類任務一再交給模型時，它會往上拉成不必再交代就持續成立的結果，例如把「修這個 crash」拉成「app 保持不 crash」。新做法要取代現行流程時，先跟舊流程並行一個週期。如果有人在等的就是這一份成品，例如審查中的 patch，它會保留成品，改走 Depth。
+- Depth 回答四題：頂尖從業者會多做什麼、他們會從哪份最原始的材料開始、會用哪些具名的方法與工具、除了你和模型之外誰能判定結果是對的。你說出口的信念，例如「流失是 onboarding 的問題」，會被改成要用原始資料驗證的假設。目標設在接近該領域頂尖的水準，並寫出可以否決它的限制，避免靠弄壞別的東西達標。材料是資料時，還會要求找出一項目前還沒人知道的發現，並在沒用來找它的資料上驗證。
 - Range 先把任務的名詞換成動詞。「一份季報」變成「讓忙碌的主管在 30 分鐘內看懂因果，並決定錢往哪裡投」。再從動詞找出二到四個領域，每個領域附上它實際使用的工具，其中一個負責推翻結果。
 
-**第三步，改寫，然後停。** 一段放在 code block 裡的 prompt，用你的口吻、你的語言，結尾一定是外部檢查與通過、失敗標準。skill 問你一句要不要跑，不會自己開始。
+**第三步，改寫，然後停。** 一段放在 code block 裡的 prompt，用你的口吻、你的語言，結尾一定是外部檢查與通過、失敗標準。外部檢查要回報實際量到的結果，跟目標並列；另一個模型說好不算數，誠實的失敗可以接受。skill 問你一句要不要跑，不會自己開始。
 
 回覆語言跟著你的任務走。分析段用短句、主動語態，一個東西只有一個名字。
 
@@ -112,6 +112,7 @@ codex plugin add ambition@ambition
 
 - Felix Rieseberg，[How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/)，2026-10-13。Depth 的四題逐字引用他的 prompt，其餘技巧是轉述。
 - [DannyMac180/skills 的 be-ambitious](https://github.com/DannyMac180/skills/tree/main/be-ambitious)（MIT）只實作了 Depth。本 skill 的輸入規則與「改寫後停下」參考它。
+- Erik MacKinnon 的 [ambition](https://github.com/erikmackinnon/skills/tree/main/skills/ambition)（MIT），由六個模型分別讀同一篇文章後綜合而成。困難目標的否決條件、獨立的外部檢查、回報實測結果、成品本身就是重點時保留成品，這四點轉述自它。
 - Andrej Karpathy 2026-10-02 的推文建議要求模型用 ASD-STE100 輸出，比較好讀。分析段的短句規則取其八成。
 
 ## 授權

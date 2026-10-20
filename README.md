@@ -19,11 +19,11 @@ First it picks an axis. Altitude means the task is standing in for some outcome.
 
 Then it works the axis.
 
-- On Altitude it keeps asking "and then what?" until it lands on an outcome someone will decide on. It writes a three-rung ladder (the task as asked, the decision the task serves, the outcome itself) and lists what the model needs before the top rung is even possible: data access, tools, an environment, some way to verify the result.
-- On Depth it answers four questions. What would a top professional do here that you didn't ask for? What's the rawest material they'd start from? Which methods and tools, by name? And who or what, other than you or the model, gets to say the result is right? Any belief you stated ("churn is an onboarding problem") turns into a hypothesis to test against the raw data.
+- On Altitude it keeps asking "and then what?" until it lands on an outcome someone will decide on. It writes a three-rung ladder (the task as asked, the decision the task serves, the outcome itself) and lists what the model needs before the top rung is even possible: data access, tools, an environment, some way to verify the result. If you keep handing over the same kind of task, it aims for the outcome that stays true without you: "the app stays crash-free" instead of "fix this crash." A new way that would replace a process runs beside the old one for a cycle first. And if someone is waiting on that exact thing, like a patch under review, it keeps the thing and goes deep instead.
+- On Depth it answers four questions. What would a top professional do here that you didn't ask for? What's the rawest material they'd start from? Which methods and tools, by name? And who or what, other than you or the model, gets to say the result is right? Any belief you stated ("churn is an onboarding problem") turns into a hypothesis to test against the raw data. It sets a target near the best in the field and names what's allowed to veto it, so nobody hits the number by breaking something else. When the material is data, it also asks for one thing nobody knows yet, checked on data it wasn't found on.
 - On Range it swaps the nouns for verbs first. "A quarterly deck" becomes "help busy leaders see what caused this quarter's numbers and decide where the money goes, in 30 minutes." From those verbs it picks two to four fields, each with the instrument that field would really use, and one of them is there to try to break the result.
 
-Last, it writes the prompt. One code block, in your voice and your language, ending with an outside check and what counts as a pass or a failure. Then it asks whether you want to run it. It doesn't start on its own.
+Last, it writes the prompt. One code block, in your voice and your language, ending with an outside check and what counts as a pass or a failure. That check reports the measured result next to the target. Another model agreeing doesn't count, and an honest miss is fine. Then it asks whether you want to run it. It doesn't start on its own.
 
 The reply follows whatever language your task was in. The analysis part is written in short sentences, active voice, one name per thing. (That bit comes from a Karpathy tweet about asking models for ASD-STE100 style output. I kept about 80% of it.)
 
@@ -107,6 +107,7 @@ The canonical file is `skills/ambition/SKILL.md`, written in English. `plugins/a
 
 - Felix Rieseberg, [How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/), 2026-10-13. The four Depth questions quote his prompt word for word. Everything else is paraphrased.
 - [be-ambitious](https://github.com/DannyMac180/skills/tree/main/be-ambitious) from DannyMac180/skills (MIT) implements the Depth prompt only. The input rules and the "rewrite, then stop" ending are borrowed from it.
+- Erik MacKinnon's [ambition](https://github.com/erikmackinnon/skills/tree/main/skills/ambition) (MIT), built from six models reading the same post. The veto on a hard target, the independent outside check, the measured report and keeping the artifact when it's the point are paraphrased from it.
 - Andrej Karpathy's tweet from 2026-10-02 on asking models to write in ASD-STE100.
 
 ## License
