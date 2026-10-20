@@ -2,6 +2,8 @@
 
 讓一個任務做得更深，不是做得更大。你把準備交給 AI 的任務丟給它，它先判斷這個任務需要哪一種野心，照那一軸分析，再把任務改寫成一段可以直接執行的 prompt，然後停下來等你看過。
 
+分領域 references 提供軟體、文件與簡報、研究與分析、寫作與溝通的原始材料、具名方法、外部檢查與陷阱；hard-cases 則協助處理所選軸線上的難題。
+
 方法來自 Felix Rieseberg 2026 年 10 月的文章《How to be more ambitious: A tutorial for humans with models》。他把野心分成四種：Speed、Altitude、Depth、Range。Speed 是同樣的事做得更快，他明說這不需要技巧，所以這個 skill 只處理另外三種。
 
 English version: [README.md](README.md)

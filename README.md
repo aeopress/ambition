@@ -2,6 +2,8 @@
 
 A skill for Claude Code and Codex CLI. You hand it a task you were about to give the AI, and it hands back a sharper version of the same task. It figures out which kind of ambition the task needs, works through that angle, rewrites the task as a prompt you can run, and then stops so you can read it first.
 
+Domain references supply raw material, named methods, outside checks and traps for software, documents and presentations, research and analysis, and writing and communication; a hard-cases reference helps resolve difficult choices on the selected axis.
+
 The idea comes from Felix Rieseberg's post [How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/) (October 2026). He splits ambition into four kinds: Speed, Altitude, Depth and Range. Speed is doing the same work faster, and he says outright that it needs no technique, so this skill only deals with the other three.
 
 正體中文版在 [README_zh-TW.md](README_zh-TW.md)。

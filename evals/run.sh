@@ -21,7 +21,8 @@
 #
 # 隔離（2026-10-20 起）：受測與 judge 的 claude -p 都加 --setting-sources ""、--strict-mcp-config、
 # --no-session-persistence，不載入使用者的 CLAUDE.md、權限設定與 MCP（實測：不加時受測會稱呼使用者暱稱、
-# 照個人規則加「你要做什麼」段落，還會用權限放行的 Bash）。受測只給 --tools "WebSearch,WebFetch"；
+# 照個人規則加「你要做什麼」段落，還會用權限放行的 Bash）。受測只給 --tools "WebSearch,WebFetch,Read"；
+# 每次受測在臨時工作目錄執行，只放 skill/SKILL.md 與 skill/references/，結束後刪除。
 # judge 用 --system-prompt 取代預設 system prompt 並關掉所有工具（只關工具而保留預設 prompt，
 # 實測會把工具呼叫寫成純文字）。
 # 受測異常：evals/check_output.py 判定空輸出、殘缺片段、推理外洩或把工具呼叫寫成純文字時，
@@ -34,8 +35,8 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 SKILL_FILE="${SKILL_FILE:-skills/ambition/SKILL.md}"
-EVALS_FILE="evals/evals.json"
-RESULTS_DIR="evals/results/$(date +%Y%m%d-%H%M%S)"
+EVALS_FILE="$PWD/evals/evals.json"
+RESULTS_DIR="$PWD/evals/results/$(date +%Y%m%d-%H%M%S)"
 RUNS=2
 
 CASE_FILTER=""
@@ -153,7 +154,7 @@ for id in $(jq -r '.evals[].id' "$EVALS_FILE"); do
     out_file="$RESULTS_DIR/case-$id-r$r-output.md"
     judge_file="$RESULTS_DIR/case-$id-r$r-judge.json"
     # stream-json 抓完整逐字稿：軸線點名等中間訊息可能不在最終回覆裡，只抓最後一則會漏。
-    # 只給 WebSearch、WebFetch：evals 驗的是輸出契約，不是 subagent 編排；也不能真的叫到本機安裝的
+    # 只給 WebSearch、WebFetch、Read：Read 讀取工作目錄內的 skill 與 references；不做 subagent 編排，也不能真的叫到本機安裝的
     # best-minds plugin（2026-10-19 實測，案例 4 的受測呼叫了 best-minds，開圓桌、查網路、還把辯論寫進 docs.local）。
     # perl alarm 硬逾時 15 分鐘＋自動重試：headless 偶發 API 端卡死（tool_result 已回、
     # 下一個 assistant 訊息永不到）。逾時（exit 142）自動重試最多三次，其他錯誤直接失敗。
@@ -161,16 +162,24 @@ for id in $(jq -r '.evals[].id' "$EVALS_FILE"); do
     anomaly_try=1
     anomaly=""
     while :; do
+      ws="$(mktemp -d "${TMPDIR:-/tmp}/ambition-eval-XXXXXX")"
+      mkdir -p "$ws/skill"
+      cp "$SKILL_FILE" "$ws/skill/SKILL.md"
+      cp -R skills/ambition/references "$ws/skill/references"
+      skill_prompt="Base directory for this skill: $ws/skill
+$SKILL_BODY"
       set +e
+      ( cd "$ws" &&
       CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=900000 \
       perl -e 'alarm shift @ARGV; exec @ARGV' 900 claude -p "$prompt" \
-        --append-system-prompt "$SKILL_BODY" \
-        --tools "WebSearch,WebFetch" \
-        --allowedTools "WebSearch,WebFetch" \
+        --append-system-prompt "$skill_prompt" \
+        --tools "WebSearch,WebFetch,Read" \
+        --allowedTools "WebSearch,WebFetch,Read" \
         "${ISOLATION_ARGS[@]}" \
         --output-format stream-json --verbose \
-        ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} > "$raw_file"
+        ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} ) > "$raw_file"
       subject_rc=$?
+      rm -rf "$ws"
       set -e
       if [[ "$subject_rc" -ne 0 ]]; then
         if [[ "$subject_rc" -eq 142 && "$attempt" -lt 3 ]]; then

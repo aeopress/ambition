@@ -63,6 +63,19 @@ Done when: one axis is named, with its tell, before any analysis, or the hand-of
 
 ## Step 2: Analyze on that axis
 
+Read the reference for the task before the axis analysis. Choose the closest domain. For a mixed task, read at most two domain references.
+
+| Task | Reference |
+|---|---|
+| Code, bugs, performance, infrastructure or CI | [Software](references/software.md) |
+| Reports, slides or decision documents | [Documents and presentations](references/documents-and-presentations.md) |
+| Data, investigations or source-based research | [Research and analysis](references/research-and-analysis.md) |
+| Prose, documentation or messages | [Writing and communication](references/writing-and-communication.md) |
+
+Read only the sections for the selected axis: Altitude reads **Outcome**. Depth reads **Raw material**, **Methods and tools**, **Judges**, and **Targets and vetoes**. Range reads **Other fields worth borrowing from**. Every axis also reads **Traps**. Use these sections as material for that axis, not as extra steps or deliverables.
+
+Also read [Hard cases](references/hard-cases.md) when no outside check is available, a target could be faked, depth is hard to distinguish from scope growth, the requested artifact may need to stay, or the target may be too timid. Use the relevant section to resolve that issue. Keep one axis. Rewrite and stop.
+
 Name the field first (for example "SRE incident response", "cohort analysis", "investigative journalism"). Be concrete: name the actual thing, not the category. When you do not know a source, tool or method well enough, say so. Say what you did not find.
 
 ### Altitude
