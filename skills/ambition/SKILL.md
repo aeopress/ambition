@@ -1,6 +1,6 @@
 ---
 name: ambition
-description: "Raise the ambition of a task before it runs. Three axes: Altitude (the outcome behind the task), Depth (a top professional's raw material, methods and an outside judge), Range (other fields and their instruments). Produces one rewritten prompt and stops. Keeps the outcome: deeper, not bigger."
+description: "Raise the ambition of a task before it runs. Three axes: Altitude (the outcome behind the task), Depth (a top professional's raw material, methods and an outside judge), Range (other fields and their instruments). Picks one main axis and borrows at most one move from another axis. Produces one rewritten prompt and stops. Keeps the outcome: deeper, not bigger."
 when_to_use: "Triggers: be ambitious, more ambitious, deeper not bigger, raise the bar, what would a top professional do, goal behind the goal, which fields could help, 更有野心, 做深一點, 拉高層次, 跨領域借方法. Not for closed factual questions, scope expansion, tone or length edits, or open-ended judgment calls (those go to best-minds)."
 argument-hint: "<task or prompt>"
 allowed-tools: Read, WebSearch, WebFetch, AskUserQuestion
@@ -8,7 +8,7 @@ allowed-tools: Read, WebSearch, WebFetch, AskUserQuestion
 
 <!--
 input: a task or prompt the user is about to run
-output: the chosen axis with its tell, an axis-specific analysis, one rewritten prompt in a fenced block, then stop
+output: the main axis with its tell, the main-axis analysis with at most one borrowed move, one rewritten prompt in a fenced block, then stop
 pos: auxiliary skill, a pre-flight step before a task runs
 
 CANONICAL LANGUAGE: English, STE-flavored (short sentences, active voice, one name for each thing). The reply language follows the user's task. See the rule below.
@@ -46,20 +46,24 @@ When the task names files, data, logs or drafts that you can read, read them bef
 
 ## Step 1: Triage the axis
 
-Pick one axis. Use these tells:
+Pick one main axis. Use these tells:
 
 - **Altitude**: the task is a proxy for an outcome. People will hold a meeting about the result, or the user hands over the same kind of task again and again. Example: "make the QBR slides" serves "leadership catches problems early." "Fix this crash" serves "the app stays crash-free."
 - **Depth**: the user wants this one task done at the level of the best professional in the field.
 - **Range**: the task sits on the surface of one field. Other fields own better instruments for parts of it.
 - **Speed**: the task is clear and the user wants it done. Say "this task needs Speed only" and stop. Offer to run it as asked.
 
-Name the axis and its tell in one sentence, then move on.
+Name the main axis and its tell in one sentence before the analysis.
 
 When the task is an open-ended judgment with no single right answer, the hand-off is the whole reply: say in one or two sentences that this is a judgment call and that best-minds handles it, then call the Skill tool with "best-minds". The sentence that names best-minds is the last sentence of the reply. When the Skill tool is unavailable, the reply ends there. Add no description of what best-minds does, no command, no code block and no copy of the user's question. A hand-off carries no axis, no analysis, no rewritten prompt and no opinion of your own. The boundary: Range yields fields and instruments for a task that will run. best-minds yields real people's perspectives for a decision.
 
-When two axes fit, pick the axis the user's wording supports. Name the other axis in a few words as a follow-up. When the choice hinges on the user's intent, use AskUserQuestion with the two axes. When interaction is unavailable, state the assumption you chose.
+When two axes fit, pick the main axis the user's wording supports. When the choice hinges on the user's intent, use AskUserQuestion with the two axes. When interaction is unavailable, state the assumption you chose.
 
-Done when: one axis is named, with its tell, before any analysis, or the hand-off sentence is written and nothing follows it.
+Use Step 2 for the main axis only. You may borrow at most one move from one other axis. Do not run a second axis analysis. Apply the deeper, not bigger check to the move. The move must change a decision, start from rawer material, or provide stronger evidence for the same outcome. Reject a move that adds scope or a parallel deliverable. If no move passes this check, use the main axis alone.
+
+If you borrow a move, name its source axis and the move in one line. State how the move passes the check. Keep the move as part of the same task.
+
+Done when: one main axis is named, with its tell, before any analysis. Name at most one borrowed move and its source axis. For a hand-off, write only the hand-off sentence and stop.
 
 ## Step 2: Analyze on that axis
 
@@ -118,11 +122,13 @@ Done when: every field on the list carries a named instrument and the verb it se
 
 ## Step 3: Rewrite and stop
 
-Write the rewritten prompt in one fenced block the user can copy. It keeps the user's outcome, scope, voice and language. It asks for exactly what Step 2 found:
+Write the rewritten prompt in one fenced block the user can copy. It keeps the user's outcome, scope, voice and language. It includes what Step 2 found for the main axis:
 
 - Altitude: the rung the user accepts, with the prerequisites stated as setup steps, and the outside signal.
 - Depth: start from the raw material. Use the named methods. State the target and its veto. End with the outside judge and its pass and failure criteria. Include the threshold or named baseline comparison in the rewritten prompt.
 - Range: run each field's instrument on the material, end with the adversarial field's check.
+
+If you borrowed a move in Step 1, include that move in the same rewritten prompt. Keep the main axis as the basis of the prompt. Add no second axis analysis or parallel deliverable. If no move passed the check, write the prompt for the main axis alone.
 
 When the method needs access, data or software that the model lacks, state it as a setup step at the start of the rewrite. Name what only the user can provide.
 
