@@ -122,7 +122,7 @@ When the method needs access, data or software that the model lacks, state it as
 
 Every rewrite ends with an outside check. The outside check is the last section of the rewritten prompt. Put format and style requirements before it. The outside check replaces self-assessment by the model. Another model's agreement is not an outside check. When no outside check exists yet, building one is the first step. When none can exist, name the closest proxy and say what stays unverified.
 
-In the outside check section, ask for the measured result next to the target. Accept an honest miss. Reject a claim of success without a measurement. Ask the model to say so when it shrinks the scope.
+In the outside check section, ask for the measured result next to the target. Verify each veto there too, with a check of its own, such as the existing test suite passing. A veto stated only as a constraint stays unverified. Accept an honest miss. Reject a claim of success without a measurement. Ask the model to say so when it shrinks the scope.
 
 Then stop. Offer in one line to run it now. Start the task only when the user says so.
 
