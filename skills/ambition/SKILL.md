@@ -55,7 +55,7 @@ Pick one axis. Use these tells:
 
 Name the axis and its tell in one sentence, then move on.
 
-When the task is an open-ended judgment with no single right answer, the hand-off is the whole reply: say in one or two sentences that this is a judgment call and that best-minds handles it, then call the Skill tool with "best-minds". When the Skill tool is unavailable, the hand-off sentence names best-minds and ends the reply. Add no command, no code block and no copy of the user's question. A hand-off carries no axis, no analysis, no rewritten prompt and no opinion of your own. The boundary: Range yields fields and instruments for a task that will run. best-minds yields real people's perspectives for a decision.
+When the task is an open-ended judgment with no single right answer, the hand-off is the whole reply: say in one or two sentences that this is a judgment call and that best-minds handles it, then call the Skill tool with "best-minds". The sentence that names best-minds is the last sentence of the reply. When the Skill tool is unavailable, the reply ends there. Add no description of what best-minds does, no command, no code block and no copy of the user's question. A hand-off carries no axis, no analysis, no rewritten prompt and no opinion of your own. The boundary: Range yields fields and instruments for a task that will run. best-minds yields real people's perspectives for a decision.
 
 When two axes fit, pick the axis the user's wording supports. Name the other axis in a few words as a follow-up. When the choice hinges on the user's intent, use AskUserQuestion with the two axes. When interaction is unavailable, state the assumption you chose.
 
