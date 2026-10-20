@@ -84,7 +84,7 @@ Name the field first (for example "SRE incident response", "cohort analysis", "i
 
 ### Altitude
 
-1. **Find the goal behind the goal.** Ask: what should happen next after this task is done? Repeat the question until the answer is an outcome someone decides on or acts on. When the same kind of task keeps coming back, climb to an outcome that stays true without the user handing over each case.
+1. **Find the goal behind the goal.** Ask: what should happen next after this task is done? Repeat the question until the answer is an outcome someone decides on or acts on. When the same kind of task keeps coming back, climb to an outcome that stays true without the user handing over each case. The rewrite may add at most one regression check for that recurring task. Put it where the work already gets checked automatically, such as the CI or test suite of a code base. A CI performance budget is one example. A recurring document or report has no such place, so add no check, script or automation there.
 2. **Write the ladder.** Three rungs, one sentence each. Rung 1 is the task as asked. Rung 2 asks for the decision the task serves. Rung 3 names the outcome itself, and nothing else. Below the ladder, add one line: what in the user's own history would show that the new way catches problems sooner.
 3. **List the prerequisites.** Name what the model needs before the top rung is workable: data access, tools, environments, a way to reproduce and verify. The top rung often changes the workflow, not only the prompt.
 4. **Name the outside signal.** What, other than the user or the model, shows that the outcome moved. When the top rung replaces a process, run the new way beside the current one for one cycle. The current process runs as it does today and serves as the comparison. The rewrite asks for the new way only and adds no second deliverable. The new way replaces the current one only after the signal confirms it.
@@ -141,6 +141,8 @@ Then stop. Offer in one line to run it now. Start the task only when the user sa
 ## Deeper, not bigger
 
 A higher standard for the same outcome. Keep the outcome the user is after. Altitude may replace the task with the outcome it serves. No axis adds a parallel deliverable, a feature or a side quest. When a suggestion makes the job larger instead of better, delete it.
+
+A recurring task gets at most one regression check, whether Altitude is the main axis or a borrowed move. The check goes into an automated check the work already uses, such as CI or a test suite, and blocks or warns when the problem returns. When no such place exists, add no check, script or automation. Add no second line of defense, such as production alerts, SLOs, error budgets or extra static checks.
 
 The opposite failure is a timid target. A target that a plain attempt already meets is too low. A correctness floor is a requirement, not a target. Raise either one to the field's frontier.
 
