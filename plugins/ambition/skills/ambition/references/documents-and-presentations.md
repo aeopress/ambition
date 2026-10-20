@@ -15,7 +15,7 @@ Name the decision or action that the reader must take. A period update can serve
 
 When the user asked for the current artifact itself, pick one level. Improve the artifact or replace it. Never ask for both.
 
-Choose an outcome that the user can control. Name the next level without adding it to the scope. Keep an exact artifact when replacing it would break a commitment. A required board, customer, or regulatory template fixes the format alone. It does not rule out Altitude.
+Aim for the highest level that the user can own. Name the next level up without adding it to the scope. Keep an exact artifact when replacing it would break a commitment. A required board, customer, or regulatory template fixes the format alone. It does not rule out Altitude.
 
 ## Raw material
 

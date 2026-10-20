@@ -2,7 +2,7 @@ Paraphrased from erikmackinnon/skills (MIT)
 
 # Writing and communication
 
-Use this reference for prose, including documentation, speeches, essays, announcements, scripts, email, posts, and cover letters. Use only the selected axis. These methods guide one rewritten prompt; they do not start the writing task.
+Use this reference for prose, including documentation, speeches, essays, announcements, scripts, email, posts, and cover letters. Use only the selected axis. These methods guide one rewritten prompt. They do not start the writing task.
 
 ## Outcome
 
@@ -50,7 +50,13 @@ Separate tested facts, inferences, and taste. If quality remains hard to measure
 
 ## Targets and vetoes
 
-Possible targets include retaining the useful content in half as many words, conveying the point to an unfamiliar reader within 30 seconds, or answering the full set of reader questions. Choose a task-specific target above what a plain draft would achieve.
+Possible targets include these:
+
+- Keep the useful content in half as many words.
+- Convey the point to an unfamiliar reader within 30 seconds.
+- Answer the full set of reader questions.
+
+Choose a task-specific target above what a plain draft would achieve.
 
 Preserve factual accuracy, the author's voice, the relationship with the reader, and the required tone. Required length and format also veto a proposed target.
 

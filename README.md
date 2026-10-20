@@ -2,7 +2,7 @@
 
 A skill for Claude Code and Codex CLI. You hand it a task you were about to give the AI, and it hands back a sharper version of the same task. It figures out which kind of ambition the task needs, works through that angle, rewrites the task as a prompt you can run, and then stops so you can read it first.
 
-Domain references supply raw material, named methods, outside checks and traps for software, documents and presentations, research and analysis, and writing and communication; a hard-cases reference helps resolve difficult choices on the selected axis.
+It ships with domain references for software, documents and presentations, research and analysis, and writing. Each one lists raw material, named methods, outside checks and traps. A separate hard-cases reference helps with the tough calls.
 
 The idea comes from Felix Rieseberg's post [How to be more ambitious: A tutorial for humans with models](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/) (October 2026). He splits ambition into four kinds: Speed, Altitude, Depth and Range. Speed is doing the same work faster, and he says outright that it needs no technique, so this skill only deals with the other three.
 
@@ -103,7 +103,7 @@ As far as `--help` says, `upgrade` only refreshes the marketplace snapshot, so r
 
 ## Hacking on it
 
-The canonical file is `skills/ambition/SKILL.md`, written in English. `plugins/ambition/` holds the Codex edition, which differs only in platform mechanics. If you change SKILL.md, bump the version in all three plugin manifests and port the change to the Codex edition. `evals/evals.json` has four cases: one per axis, plus a negative case that must hand off to best-minds. `./evals/run.sh --case 2` runs one, no argument runs all. The judge is an LLM and not deterministic, so each case runs twice (`--runs N` to change it); a case passes when one run clears every expectation, except the hand-off case, which has to pass every run. To check a saved output against the current expectations without running the skill again, use `./evals/run.sh --rejudge <output.md> --case <id>`. Every run is isolated from your own CLAUDE.md, settings and MCP servers. If the skill's reply comes back empty, cut off, or full of leaked reasoning, the runner reruns it instead of sending it to the judge.
+The canonical file is `skills/ambition/SKILL.md`, written in English. `plugins/ambition/` holds the Codex edition, which differs only in platform mechanics. If you change SKILL.md, bump the version in all three plugin manifests and port the change to the Codex edition. `evals/evals.json` has four cases: one per axis, plus a negative case that must hand off to best-minds. `./evals/run.sh --case 2` runs one, no argument runs all. The judge is an LLM and not deterministic, so each case runs twice (`--runs N` to change it). A case passes when one run clears every expectation. The hand-off case is the exception: it has to pass every run. To check a saved output against the current expectations without running the skill again, use `./evals/run.sh --rejudge <output.md> --case <id>`. Every run is isolated from your own CLAUDE.md, settings and MCP servers. If the skill's reply comes back empty, cut off, or full of leaked reasoning, the runner reruns it instead of sending it to the judge.
 
 ## Where it comes from
 

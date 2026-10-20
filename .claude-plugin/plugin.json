@@ -1,7 +1,7 @@
 {
   "name": "ambition",
   "description": "Pre-flight skill that raises a task's ambition before it runs. Triages the axis (Altitude: the outcome behind the task; Depth: a top professional's raw material, methods and outside judge; Range: other fields and their instruments), then rewrites the task as one prompt and stops. Based on Felix Rieseberg's 2026 tutorial. Replies follow the user's language.",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": {
     "name": "yelban"
   },

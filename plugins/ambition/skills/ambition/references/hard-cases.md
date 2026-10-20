@@ -54,7 +54,7 @@ A demanding target helps only if a method can reach it and a judge can reject a 
 
 For unfamiliar work, make the search for a workable method the first step in the rewrite. Keep the hard target. Outcome pressure without a method can direct attention toward the score instead of the task.
 
-Require the later execution to report a measured miss honestly. It must disclose any reduction in scope. A claim without a measurement cannot pass. This reference does not authorize execution now.
+Tell the later execution to keep working past the first result that looks impossible. Require it to report a measured miss honestly. It must disclose any reduction in scope. A claim without a measurement cannot pass. This reference does not authorize execution now.
 
 ## What makes a judge independent
 
@@ -95,6 +95,6 @@ Persistence helps when the limit was underestimated. Missing resources, checks a
 - Budget the user's review time. Output that nobody can inspect has little practical value.
 - A lasting automation needs credentials, monitoring and an owner. Name those prerequisites if the selected Altitude outcome needs it.
 - Mark dependencies on decisions outside the user's authority. Do not expand the rewrite into work they cannot authorize.
-- For an Altitude replacement, compare the new way with the current process for one cycle. The current process runs as it does today, outside the rewrite. The rewrite asks for the new way only, never for a second copy of the current artifact. Require an external signal before replacement.
+- For an Altitude replacement, keep the ambitious direction and make the first step disposable. Compare the new way with the current process for one cycle. The current process runs as it does today, outside the rewrite. The rewrite asks for the new way only, never for a second copy of the current artifact. Expand the new way only after an external signal confirms it.
 
 Use these checks within the chosen axis. Finish the rewritten prompt and stop.

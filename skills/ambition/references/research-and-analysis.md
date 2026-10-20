@@ -44,7 +44,7 @@ Choose tools that can check the calculation: R, SQL, Python, statistical librari
 
 ## Targets and vetoes
 
-- Select a target that fits the question: detect a warning a stated number of days before the current process, or predict unseen outcomes above a named baseline. Require primary evidence for central claims as a correctness veto.
+- Select a target that fits the question. One option detects a warning a stated number of days before the current process. Another predicts unseen outcomes above a named baseline. Require primary evidence for central claims as a correctness veto.
 - Reject results that depend on leaked test data, inadequate samples, violated privacy or consent, or claims beyond what the sources can establish.
 
 ## Traps

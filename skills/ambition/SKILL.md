@@ -3,7 +3,7 @@ name: ambition
 description: "Raise the ambition of a task before it runs. Three axes: Altitude (the outcome behind the task), Depth (a top professional's raw material, methods and an outside judge), Range (other fields and their instruments). Produces one rewritten prompt and stops. Keeps the outcome: deeper, not bigger."
 when_to_use: "Triggers: be ambitious, more ambitious, deeper not bigger, raise the bar, what would a top professional do, goal behind the goal, which fields could help, 更有野心, 做深一點, 拉高層次, 跨領域借方法. Not for closed factual questions, scope expansion, tone or length edits, or open-ended judgment calls (those go to best-minds)."
 argument-hint: "<task or prompt>"
-allowed-tools: WebSearch, WebFetch, AskUserQuestion
+allowed-tools: Read, WebSearch, WebFetch, AskUserQuestion
 ---
 
 <!--
