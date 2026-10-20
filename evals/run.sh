@@ -35,7 +35,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 SKILL_FILE="${SKILL_FILE:-skills/ambition/SKILL.md}"
-EVALS_FILE="$PWD/evals/evals.json"
+EVALS_FILE="${EVALS_FILE:-$PWD/evals/evals.json}"
 RESULTS_DIR="$PWD/evals/results/$(date +%Y%m%d-%H%M%S)"
 RUNS=2
 
