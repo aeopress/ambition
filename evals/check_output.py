@@ -21,7 +21,9 @@ CJK = re.compile(r"[㐀-鿿豈-﫿]")
 
 def reason(text: str, prompt: str) -> str:
     body = text.strip()
-    if len(body) < MIN_CHARS:
+    # 短輸出：少於 15 字一律算異常；15 到 MIN_CHARS 之間，句末有完整標點就算正常
+    # （0.1.9 的轉交只有一句，正常回覆約 30 字，2026-10-20 實測被誤判）。
+    if len(body) < 15 or (len(body) < MIN_CHARS and body[-1] not in "。！？.!?」』）)"):
         return f"輸出過短（{len(body)} 字）"
     if body[0] in "，。、；：！？）」』,.;:!?)" or re.match(r"[a-z]", body):
         return f"輸出從句子中間開始：{body[:30]!r}"
