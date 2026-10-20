@@ -66,7 +66,7 @@
     <div class="diagram-container">
       <svg viewBox="0 0 1000 740" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ambition-flow-title ambition-flow-desc">
         <title id="ambition-flow-title">What ambition does with a task</title>
-        <desc id="ambition-flow-desc">Flowchart of how the ambition skill routes a task: Speed runs it as asked, a judgment call goes to best-minds, and a higher bar picks Altitude, Depth or Range before one rewritten prompt with an outside check.</desc>
+        <desc id="ambition-flow-desc">Flowchart of how the ambition skill routes a task: Speed runs it as asked, a judgment call goes to best-minds, and a higher bar picks a main axis, Altitude, Depth or Range, and borrows at most one move from another axis before one rewritten prompt with an outside check.</desc>
         <defs>
           <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
             <circle cx="1" cy="1" r="0.9" fill="rgba(45,49,66,0.10)"/>
@@ -104,6 +104,8 @@
         <text x="530" y="401" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">DEPTH</text>
         <rect x="688" y="304" width="44" height="12" rx="2" fill="#f5f5f5"/>
         <text x="710" y="313" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">RANGE</text>
+        <rect x="508" y="562" width="168" height="12" rx="2" fill="#f5f5f5"/>
+        <text x="592" y="571" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.12em">+ AT MOST ONE BORROWED MOVE</text>
 
         <!-- Start -->
         <rect x="360" y="40" width="280" height="48" rx="20" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
@@ -126,7 +128,7 @@
 
         <!-- Decision 2 -->
         <polygon points="500,272 600,324 500,376 400,324" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
-        <text x="500" y="328" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Which axis?</text>
+        <text x="500" y="328" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Which main axis?</text>
 
         <!-- Axis steps -->
         <rect x="60" y="424" width="240" height="80" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>

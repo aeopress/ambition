@@ -53,17 +53,18 @@ TEXT = {
         eyebrow="Flowchart · ambition",
         h1="What ambition does with a task",
         title="What ambition does with a task",
-        desc="Flowchart of how the ambition skill routes a task: Speed runs it as asked, a judgment call goes to best-minds, and a higher bar picks Altitude, Depth or Range before one rewritten prompt with an outside check.",
+        desc="Flowchart of how the ambition skill routes a task: Speed runs it as asked, a judgment call goes to best-minds, and a higher bar picks a main axis, Altitude, Depth or Range, and borrows at most one move from another axis before one rewritten prompt with an outside check.",
         start="A task you're about to hand the AI",
         d1=("What does", "it need?"),
         speed=("Speed", "run it as asked"),
         bm=("best-minds round table", "no single right answer"),
-        d2="Which axis?",
+        d2="Which main axis?",
         alt=("Altitude", "The outcome behind the task.", "Ladder up, list what it needs first."),
         dep=("Depth", "What a top professional does:", "raw material, named tools, outside judge"),
         rng=("Range", "Nouns to verbs, then borrow", "instruments from other fields."),
         end=("One rewritten prompt,", "ending with an outside check", "then it stops, you decide whether to run it"),
-        lbl=dict(just="JUST DONE", dec="A DECISION", bar="A HIGHER BAR", alt="ALTITUDE", dep="DEPTH", rng="RANGE"),
+        lbl=dict(just="JUST DONE", dec="A DECISION", bar="A HIGHER BAR", alt="ALTITUDE", dep="DEPTH", rng="RANGE",
+                 borrow="+ AT MOST ONE BORROWED MOVE"),
         legend_title="LEGEND · SHAPE CARRIES TYPE",
         legend=("Start / end (oval)", "Step (rectangle)", "Decision (diamond)", "Merge", "Happy path", "Branch", "Hand-off"),
     ),
@@ -71,17 +72,18 @@ TEXT = {
         eyebrow="流程圖 · ambition",
         h1="ambition 怎麼處理一個任務",
         title="ambition 怎麼處理一個任務",
-        desc="流程圖：ambition 如何分流一個任務。只要做完就照原樣執行（Speed），判斷題交給 best-minds，要更高標準則選 Altitude、Depth 或 Range，最後產出一段以外部檢查收尾的改寫 prompt。",
+        desc="流程圖：ambition 如何分流一個任務。只要做完就照原樣執行（Speed），判斷題交給 best-minds，要更高標準則從 Altitude、Depth、Range 挑一條主軸，最多再從另一軸借一招，最後產出一段以外部檢查收尾的改寫 prompt。",
         start="你準備交給 AI 的任務",
         d1=("這個任務", "需要什麼？"),
         speed=("Speed", "照原樣執行"),
         bm=("best-minds 圓桌", "沒有標準答案的判斷題"),
-        d2="走哪一軸？",
+        d2="主軸是哪一軸？",
         alt=("Altitude", "任務背後的結果。", "往上拉階梯，先列出模型需要什麼。"),
         dep=("Depth", "頂尖從業者怎麼做：", "最原始的材料、具名工具、外部裁判。"),
         rng=("Range", "先把名詞換成動詞，", "再向其他領域借工具。"),
         end=("一段改寫後的 prompt，", "以外部檢查收尾。", "然後停下，由你決定要不要跑。"),
-        lbl=dict(just="只要做完", dec="要做決定", bar="要更高標準", alt="ALTITUDE", dep="DEPTH", rng="RANGE"),
+        lbl=dict(just="只要做完", dec="要做決定", bar="要更高標準", alt="ALTITUDE", dep="DEPTH", rng="RANGE",
+                 borrow="最多借另一軸一招"),
         legend_title="圖例 · 形狀代表類型",
         legend=("起點／終點（橢圓）", "步驟（矩形）", "決策（菱形）", "匯合", "主路徑", "分支", "交接（虛線）"),
     ),
@@ -269,6 +271,7 @@ def build(lang: str, theme: str, hand: bool = False, font_face: str = "") -> str
         {arrow_label(290, 324 - 8 - sz["mask_h"], t["lbl"]["alt"])}
         {beside(500, 392, t["lbl"]["dep"])}
         {arrow_label(710, 324 - 8 - sz["mask_h"], t["lbl"]["rng"])}
+        {beside(500, 562, t["lbl"]["borrow"])}
 
         <!-- Start -->
         {oval(360, 40, 280, 48)}
