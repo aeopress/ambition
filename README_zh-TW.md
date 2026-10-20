@@ -106,7 +106,7 @@ codex plugin add ambition@ambition
 
 ## 開發與驗收
 
-正本是 `skills/ambition/SKILL.md`，英文撰寫。`plugins/ambition/` 底下是 Codex 版，只在平台機制上不同。`evals/evals.json` 有四個案例：一軸一案，加一個必須轉交 best-minds 的負向案例。`./evals/run.sh --case 2` 跑單一案例，不帶參數跑全部。judge 是 LLM，不是確定性的，所以每個案例預設跑兩次（`--runs N` 可改）：有一次全過就算過，負向案例例外，每次都要過。想用目前的 expectations 重判一份存檔輸出、不重跑受測，用 `./evals/run.sh --rejudge <output.md> --case <id>`。改了 SKILL.md，三份 plugin 清單的版本要一起升，Codex 版也要同步。
+正本是 `skills/ambition/SKILL.md`，英文撰寫。`plugins/ambition/` 底下是 Codex 版，只在平台機制上不同。`evals/evals.json` 有四個案例：一軸一案，加一個必須轉交 best-minds 的負向案例。`./evals/run.sh --case 2` 跑單一案例，不帶參數跑全部。judge 是 LLM，不是確定性的，所以每個案例預設跑兩次（`--runs N` 可改）：有一次全過就算過，負向案例例外，每次都要過。想用目前的 expectations 重判一份存檔輸出、不重跑受測，用 `./evals/run.sh --rejudge <output.md> --case <id>`。每次執行都跟你自己的 CLAUDE.md、設定和 MCP 隔開。受測回覆如果是空的、斷在半路，或混進推理過程，runner 會重跑，不送給 judge。改了 SKILL.md，三份 plugin 清單的版本要一起升，Codex 版也要同步。
 
 ## 來源
 

@@ -19,6 +19,14 @@
 #   - gate=all（案例自己在 evals.json 標 "gate": "all"，例如負向案例）：N 次都要全過。
 # 產物存 evals/results/<時間戳>/case-<id>-r<n>-*（已列入 .gitignore）。任何案例未過則 exit 1。
 #
+# 隔離（2026-10-20 起）：受測與 judge 的 claude -p 都加 --setting-sources ""、--strict-mcp-config、
+# --no-session-persistence，不載入使用者的 CLAUDE.md、權限設定與 MCP（實測：不加時受測會稱呼使用者暱稱、
+# 照個人規則加「你要做什麼」段落，還會用權限放行的 Bash）。受測只給 --tools "WebSearch,WebFetch"；
+# judge 用 --system-prompt 取代預設 system prompt 並關掉所有工具（只關工具而保留預設 prompt，
+# 實測會把工具呼叫寫成純文字）。
+# 受測異常：evals/check_output.py 判定空輸出、殘缺片段、推理外洩或把工具呼叫寫成純文字時，
+# 該份改存成 *.anomaly-<n>.*、不交給 judge，重跑受測，最多 3 次。judge 輸出無法解析（含 API Error）時重試，最多 3 次。
+#
 # 限制：headless 模式沒有 AskUserQuestion；SKILL.md 第 1 步「兩軸都合適時問使用者」
 # 分支不會觸發，evals 的 prompt 均設計為單一軸線明確。
 
@@ -56,6 +64,8 @@ SKILL_BODY="$(cat "$SKILL_FILE")"
 # macOS 內建 bash 3.2 在 set -u 下展開空陣列會報錯，用條件展開保護
 MODEL_ARGS=()
 [[ -n "${EVAL_MODEL:-}" ]] && MODEL_ARGS=(--model "$EVAL_MODEL")
+ISOLATION_ARGS=(--setting-sources "" --strict-mcp-config --no-session-persistence)
+JUDGE_SYSTEM="你是行為驗收的 judge。只輸出使用者要求的 JSON。你沒有任何工具，也不需要工具。"
 
 # judge：用案例的 prompt 與 expectations 判定一份輸出檔，結果寫進 judge 檔。
 # 參數：<prompt> <expectations> <輸出檔> <judge 檔> <stderr 檔>
@@ -79,10 +89,18 @@ $(cat "$out_file")"
   # judge 的 claude -p 實測會在完整輸出 JSON 之後仍以非零碼結束，stderr 印
   # 「No messages returned from query」（2026-10-17，連續三次）。輸出檔是完整的，
   # 所以不讓 pipefail 中止整支腳本，一律以 judge 檔能否解析為準。
-  set +e
-  claude -p "$judge_prompt" ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} 2>"$stderr_file" \
-    | sed -e '/^```/d' > "$judge_file"
-  set -e
+  # 輸出無法解析成 {"results": [...]}（含 API Error、空輸出）時重試，最多 3 次。
+  local attempt
+  for attempt in 1 2 3; do
+    set +e
+    claude -p "$judge_prompt" --system-prompt "$JUDGE_SYSTEM" --tools "" "${ISOLATION_ARGS[@]}" \
+      ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} 2>"$stderr_file" \
+      | sed -e '/^```/d' > "$judge_file"
+    set -e
+    jq -e '.results | type == "array"' "$judge_file" >/dev/null 2>&1 && return 0
+    [[ "$attempt" -lt 3 ]] && echo "   （judge 第 ${attempt} 次輸出無法解析，重試：$(head -c 80 "$judge_file" | tr '\n' ' ')）"
+  done
+  return 0
 }
 
 # 列出未過項目；judge 檔無法解析時印原文。
@@ -135,34 +153,49 @@ for id in $(jq -r '.evals[].id' "$EVALS_FILE"); do
     out_file="$RESULTS_DIR/case-$id-r$r-output.md"
     judge_file="$RESULTS_DIR/case-$id-r$r-judge.json"
     # stream-json 抓完整逐字稿：軸線點名等中間訊息可能不在最終回覆裡，只抓最後一則會漏。
-    # 停用 Agent/Task：evals 驗的是輸出契約，不是 subagent 編排。
-    # 停用 Skill：受測只能用文字說明轉交，不能真的叫到本機安裝的 best-minds plugin
-    # （2026-10-19 實測，案例 4 的受測呼叫了 best-minds，開圓桌、查網路、還把辯論寫進 docs.local）。
+    # 只給 WebSearch、WebFetch：evals 驗的是輸出契約，不是 subagent 編排；也不能真的叫到本機安裝的
+    # best-minds plugin（2026-10-19 實測，案例 4 的受測呼叫了 best-minds，開圓桌、查網路、還把辯論寫進 docs.local）。
     # perl alarm 硬逾時 15 分鐘＋自動重試：headless 偶發 API 端卡死（tool_result 已回、
     # 下一個 assistant 訊息永不到）。逾時（exit 142）自動重試最多三次，其他錯誤直接失敗。
     attempt=1
+    anomaly_try=1
+    anomaly=""
     while :; do
       set +e
       CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=900000 \
       perl -e 'alarm shift @ARGV; exec @ARGV' 900 claude -p "$prompt" \
         --append-system-prompt "$SKILL_BODY" \
+        --tools "WebSearch,WebFetch" \
         --allowedTools "WebSearch,WebFetch" \
-        --disallowedTools "Agent,Task,Skill" \
+        "${ISOLATION_ARGS[@]}" \
         --output-format stream-json --verbose \
         ${MODEL_ARGS[@]+"${MODEL_ARGS[@]}"} > "$raw_file"
       subject_rc=$?
       set -e
-      [[ "$subject_rc" -eq 0 ]] && break
-      if [[ "$subject_rc" -eq 142 && "$attempt" -lt 3 ]]; then
-        echo "   （run ${r} 受測第 ${attempt} 次逾時——API 卡死樣態，自動重試）"
-        attempt=$((attempt + 1))
-        continue
+      if [[ "$subject_rc" -ne 0 ]]; then
+        if [[ "$subject_rc" -eq 142 && "$attempt" -lt 3 ]]; then
+          echo "   （run ${r} 受測第 ${attempt} 次逾時——API 卡死樣態，自動重試）"
+          attempt=$((attempt + 1))
+          continue
+        fi
+        echo "   受測執行失敗（exit ${subject_rc}）" >&2
+        exit 1
       fi
-      echo "   受測執行失敗（exit ${subject_rc}）" >&2
-      exit 1
+      jq -r 'select(.type == "assistant") | .message.content[]? | select(.type == "text") | .text' \
+        "$raw_file" > "$out_file"
+      anomaly="$(python3 -I evals/check_output.py "$out_file" "$prompt" || true)"
+      [[ -z "$anomaly" ]] && break
+      mv "$raw_file" "${raw_file%.jsonl}.anomaly-${anomaly_try}.jsonl"
+      mv "$out_file" "${out_file%.md}.anomaly-${anomaly_try}.md"
+      echo "   （run ${r} 受測第 ${anomaly_try} 次輸出異常：${anomaly}；不交給 judge）"
+      [[ "$anomaly_try" -ge 3 ]] && break
+      anomaly_try=$((anomaly_try + 1))
     done
-    jq -r 'select(.type == "assistant") | .message.content[]? | select(.type == "text") | .text' \
-      "$raw_file" > "$out_file"
+
+    if [[ -n "$anomaly" ]]; then
+      echo "   run ${r}：FAIL — 受測連續 3 次輸出異常，未判定"
+      continue
+    fi
 
     judge "$prompt" "$expectations" "$out_file" "$judge_file" "$RESULTS_DIR/case-$id-r$r-judge.stderr"
 
