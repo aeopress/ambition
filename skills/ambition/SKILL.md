@@ -81,12 +81,14 @@ Answer the four questions from the source prompt, for the named field:
 1. **The professional's moves.** At most three moves that separate expert work from competent work here. Choose the moves with the largest effect on the result. Examples: state the decision the work serves, check base rates, reproduce before fixing, write the counter-argument.
 2. **The rawest material.** The dataset, not the chart. The filing, not the article. The logs and the code, not the bug report. Say where it lives when you know.
 3. **Methods and tools, named.** Named techniques, instruments, libraries, commands or frameworks, and why each fits. Use the same instruments the best in the field use. When the natural reach is a markdown table, name the database and the statistical model instead. The failure to avoid: a change of vocabulary without a change of instruments.
-4. **The outside judge.** An external check: a test suite, a benchmark, a reproduction, ground-truth data, a known answer, a measurement, a reviewer, a real user's behavior. Say what result counts as a pass and what counts as a failure.
+4. **The outside judge.** An external check: a test suite, a benchmark, a reproduction, ground-truth data, a known answer, a measurement, a reviewer, a real user's behavior. Set a measurable threshold or a comparison with a named baseline. State which results pass. State which results fail. Reporting a metric alone does not define these criteria.
 
 Two pressure moves, applied in the rewrite:
 
 - **Set the target at the field's frontier.** Ask for the number the best in the field reach, and state it as reasonable. "200 ms", not "faster".
 - **Turn beliefs into hypotheses.** Each belief the user states ("churn is an onboarding problem") becomes a claim to reproduce from the raw material. Ask the model to test it adversarially.
+
+Done when: the rewritten prompt ends with an outside check whose pass and failure criteria use a measurable threshold or a comparison with a named baseline.
 
 ### Range
 
@@ -101,7 +103,7 @@ Done when: every field on the list carries a named instrument and the verb it se
 Write the rewritten prompt in one fenced block the user can copy. It keeps the user's outcome, scope, voice and language. It asks for exactly what Step 2 found:
 
 - Altitude: the rung the user accepts, with the prerequisites stated as setup steps, and the outside signal.
-- Depth: start from the raw material, use the named methods, end with the outside judge and its pass criterion.
+- Depth: start from the raw material. Use the named methods. End with the outside judge and its pass and failure criteria. Include the threshold or named baseline comparison in the rewritten prompt.
 - Range: run each field's instrument on the material, end with the adversarial field's check.
 
 Every rewrite ends with an outside check. The outside check is the last section of the rewritten prompt. Put format and style requirements before it. The outside check replaces self-assessment by the model.

@@ -23,7 +23,7 @@ Then it works the axis.
 - On Depth it answers four questions. What would a top professional do here that you didn't ask for? What's the rawest material they'd start from? Which methods and tools, by name? And who or what, other than you or the model, gets to say the result is right? Any belief you stated ("churn is an onboarding problem") turns into a hypothesis to test against the raw data.
 - On Range it swaps the nouns for verbs first. "A quarterly deck" becomes "help busy leaders see what caused this quarter's numbers and decide where the money goes, in 30 minutes." From those verbs it picks two to four fields, each with the instrument that field would really use, and one of them is there to try to break the result.
 
-Last, it writes the prompt. One code block, in your voice and your language, ending with an outside check and what counts as a pass. Then it asks whether you want to run it. It doesn't start on its own.
+Last, it writes the prompt. One code block, in your voice and your language, ending with an outside check and what counts as a pass or a failure. Then it asks whether you want to run it. It doesn't start on its own.
 
 The reply follows whatever language your task was in. The analysis part is written in short sentences, active voice, one name per thing. (That bit comes from a Karpathy tweet about asking models for ASD-STE100 style output. I kept about 80% of it.)
 
